@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='utf-8'?>
+<project name="C:\xampp\htdocs\c3saas\SAAS.clpprj">
+ <settings>
+  <PM_URL><![CDATA[http://localhost/]]></PM_URL>
+  <PM_HOME_URL><![CDATA[http://localhost/]]></PM_HOME_URL>
+  <PM_LIBS><![CDATA[]]></PM_LIBS>
+  <PM_FTP_CONNECTION><![CDATA[]]></PM_FTP_CONNECTION>
+  <PM_FTP_DIR><![CDATA[]]></PM_FTP_DIR>
+  <PM_FTP_UPLOAD_ON_SAVE><![CDATA[INT:0]]></PM_FTP_UPLOAD_ON_SAVE>
+  <PM_LANGUAGE><![CDATA[]]></PM_LANGUAGE>
+ </settings>
+ <removed value=";"/>
+ <added value=""/>
+ <lastopfiles>
+  <file name="C:\xampp\htdocs\c3saas\.htaccess"/>
+  <file name="C:\xampp\htdocs\c3saas\application\config\config.php"/>
+  <file name="C:\xampp\htdocs\c3saas\application\config\hooks.php"/>
+  <file name="C:\xampp\htdocs\c3saas\application\hooks\Domain_hook.php"/>
+  <file name="C:\xampp\htdocs\c3saas\index.php"/>
+  <file name="C:\xampp\htdocs\c3saas\application\controllers\Home.php"/>
+  <file name="C:\xampp\htdocs\c3saas\application\models\Crud_model.php"/>
+  <file name="C:\xampp\htdocs\c3saas\.env"/>
+  <lastactivefile name=""/>
+ </lastopfiles>
+ <errors version="1.12.0"/>
+ <laravael/>
+ <todoblock>
+  <todofile name="C:\xampp\htdocs\c3saas\application\models\Email_model.php">
+   <todo name="TODO: Implement __call() method." pos="9;362"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\c3saas\system\database\DB_query_builder.php">
+   <todo name="todo error" pos="5;2004"/>
+   <todo name="@todo error" pos="4;2004"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\c3saas\system\helpers\string_helper.php">
+   <todo name="todo: remove in 3.1+" pos="19;230"/>
+   <todo name="todo: remove in 3.1+" pos="20;233"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\c3saas\system\libraries\Xmlrpc.php">
+   <todo name="todo - this needs to be made more general purpose" pos="7;1575"/>
+   <todo name="@todo - this needs to be made more general purpose" pos="6;1575"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\c3saas\vendor\nikic\php-parser\lib\PhpParser\Comment.php">
+   <todo name="TODO: Rename these to include &quot;start&quot;." pos="13;199"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\c3saas\vendor\nikic\php-parser\lib\PhpParser\Internal\TokenStream.php">
+   <todo name="TODO Handle non-space indentation" pos="17;232"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\c3saas\vendor\nikic\php-parser\lib\PhpParser\Lexer\TokenEmulator\AttributeEmulator.php">
+   <todo name="TODO" pos="9;34"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\c3saas\vendor\nikic\php-parser\lib\PhpParser\PrettyPrinterAbstract.php">
+   <todo name="TODO Add &lt;" pos="13;576"/>
+   <todo name="TODO: Try to preserve formatting" pos="17;807"/>
+   <todo name="TODO: Preserve formatting." pos="25;858"/>
+   <todo name="TODO: Preserve formatting." pos="25;968"/>
+   <todo name="TODO: Support removing single node." pos="13;991"/>
+   <todo name="TODO: &quot;yield&quot; where both key and value are inserted doesn't work" pos="9;1458"/>
+   <todo name="TODO" pos="86;1487"/>
+   <todo name="TODO These need to be treated more carefully" pos="47;1505"/>
+   <todo name="TODO Insertion into empty statement lists." pos="9;1608"/>
+   <todo name="TODO" pos="14;1656"/>
+   <todo name="TODO" pos="77;1683"/>
+  </todofile>
+  <todofile name="C:\xampp\htdocs\c3saas\vendor\phpunit\php-code-coverage\src\StaticAnalysis\CodeUnitFindingVisitor.php">
+   <todo name="todo Handle default values" pos="15;156"/>
+   <todo name="@todo Handle default values" pos="14;156"/>
+  </todofile>
+ </todoblock>
+ <dbgurls/>
+ <lasttime value="1730006866"/>
+</project>
