@@ -18,3 +18,60 @@ Setting up **Tenancy for CodeIgniter PHP 8.3** is straightforward:
 
    ```bash
    git clone https://github.com/humolot/Tenancy-for-CodeIgniter-PHP-8.3.git
+
+2. Install the dependencies via Composer:
+   ```bash
+   composer install
+   
+3.  Configuring Domains and Subdomains for SaaS
+To ensure your SaaS application functions correctly, you need to point the domains and subdomains to the project using one of the following control panels: Plesk, cPanel, or aaPanel.
+
+## Plesk
+Add Domain/Subdomain:
+
+Access your Plesk panel.
+Go to "Websites & Domains".
+Click on "Add Domain" or "Add Subdomain".
+Enter the domain/subdomain name you want to point.
+Configure DocumentRoot:
+
+Set the DocumentRoot to the folder where the Tenancy project is located (e.g., public_html/Tenancy-for-CodeIgniter-PHP-8.3/public).
+Configure DNS:
+
+Access the DNS settings and add or modify the A/CNAME records to point to the server's IP where your project is hosted.
+
+## cPanel
+Add Domain/Subdomain:
+
+Access your cPanel.
+Go to "Domains" and select "Add Domain" or "Subdomains".
+Fill in the details for the domain/subdomain you want to add.
+Configure DocumentRoot:
+
+Set the DocumentRoot to the folder where your Tenancy project is located (e.g., public_html/Tenancy-for-CodeIgniter-PHP-8.3/public).
+Configure DNS:
+
+In cPanel, go to "Zone Editor" and add or modify the A/CNAME records to point to your server's IP address.
+
+## aaPanel
+Add Domain/Subdomain:
+
+Access your aaPanel.
+Go to "Sites" and click on "Add Site".
+Enter the domain/subdomain name and fill in the necessary fields.
+Configure DocumentRoot:
+
+Point the DocumentRoot to the directory of your Tenancy project (e.g., /www/wwwroot/Tenancy-for-CodeIgniter-PHP-8.3/public).
+Configure DNS:
+
+Access the DNS settings and add the A/CNAME records to direct to your server's IP.
+Database Configuration
+To use the multi-tenant functionality, you'll need to set up databases for your tenants. Depending on your architecture, you can choose:
+
+Individual Database per Tenant: Create a separate database for each tenant, allowing for total data isolation.
+General Database: Use a single database with a column that identifies the tenant in each table, which can be more efficient in some scenarios.
+Be sure to adjust your queries and models to reflect the chosen approach.
+
+## Conclusion
+With Tenancy for CodeIgniter PHP 8.3, you are ready to build robust and scalable SaaS applications. Take advantage of multi-tenancy flexibility and JWT security while leveraging the simplicity of CodeIgniter.
+
