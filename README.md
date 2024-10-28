@@ -26,6 +26,35 @@ Setting up **Tenancy for CodeIgniter PHP 8.3** is straightforward:
 3.  Configuring Domains and Subdomains for SaaS
 To ensure your SaaS application functions correctly, you need to point the domains and subdomains to the project using one of the following control panels: Plesk, cPanel, or aaPanel.
 
+## CLI3 Usage
+CLI3 is a command-line tool for managing various aspects of your CodeIgniter application. Here’s how to use it:
+
+### Running the CLI3 Tool
+To run the CLI3 tool, navigate to the directory where the cli3 script is located and execute the following command:
+
+php cli3 [command] [Name]
+
+## Available Commands
+Here are the commands you can use with CLI3:
+
+### Available Commands
+
+- **controller**: Create a new controller.
+- **model**: Create a new model.
+- **view**: Create a new view.
+- **helper**: Create a new helper.
+- **library**: Create a new library.
+- **clean**: Clean caches and logs.
+- **migration**: Generate a new migration.
+- **list**: Display the list of available commands.
+- **uptime**: Check the server uptime.
+- **optimize**: Restart the PHP service and optimize.
+
+## Example Usage
+Create a new controller:
+
+php cli3 controller MyController
+
 ## Plesk
 Add Domain/Subdomain:
 
