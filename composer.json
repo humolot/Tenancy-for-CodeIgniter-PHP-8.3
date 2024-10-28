@@ -10,7 +10,8 @@
 	"require": {
 		"php": ">=5.4.8",
 		"yidas/codeigniter-model": "*",
-		"ngekoding/codeigniter-datatables": "*"
+		"ngekoding/codeigniter-datatables": "*",
+		"vlucas/phpdotenv": "*"
 	},
 	"suggest": {
 		"paragonie/random_compat": "Provides better randomness in PHP 5.x"

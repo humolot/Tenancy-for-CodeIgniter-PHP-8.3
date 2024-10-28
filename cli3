@@ -1,0 +1,415 @@
+<?php
+
+/*
+* A tool can use command line to create Controller Model View etc.
+*
+* @author Gianck Luiz (Humolot)
+* @copyright Copyright (c) 2015, Humolot <https://github.com/humolot>
+*/
+
+function loadEnv($filePath)
+{
+	if (!file_exists($filePath)) {
+		die("Not .env");
+	}
+
+	$lines = file($filePath, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+	$env = [];
+
+	foreach ($lines as $line) {
+		if (strpos(trim($line), '#') === 0) {
+			continue;
+		}
+		list($key, $value) = explode('=', $line, 2);
+		$env[trim($key)] = trim($value);
+	}
+
+	return $env;
+}
+
+$env = loadEnv('.env');
+
+echo coloredText("CLI3 for CodeIgniter3 Tool", "yellow") . "\n";
+echo coloredText("Created by Humolot", "yellow") . "\n\n";
+
+if ($argc < 3) {
+	echo coloredText("Usage: ", "yellow") .
+	coloredText("php cli3 ", "cyan") .
+	coloredText("[controller|model|view|helper|library|clean|migration|phpversion|uptime|optimize] ", "magenta") .
+	coloredText("Name\n", "green");
+	exit(1);
+}
+
+$type = $argv[1];
+$name = $argv[2];
+$basePath = 'application/';
+
+switch ($type) {
+	case 'controller':
+		createController($name, $basePath);
+		break;
+	case 'model':
+		createModel($name, $basePath);
+		break;
+	case 'view':
+		createView($name, $basePath);
+		break;
+	case 'helper':
+		createHelper($name, $basePath);
+		break;
+	case 'library':
+		createLibrary($name, $basePath);
+		break;
+	case 'clean':
+		cleanCachesAndLogs($basePath);
+		break;
+	case 'migration':
+		generateMigration($name, $basePath);
+		break;
+	case 'list':
+		listCommands();
+		break;
+	case 'phpversion':
+		checkPhpVersion();
+		break;
+	case 'uptime':
+		checkServerUptime();
+		break;
+	case 'optimize':
+		restartPhp();
+		break;
+	default:
+		echo coloredText("Invalid type. Use: controller, model, view, helper, library, clean, phpversion, uptime, restart.\n", "red");
+		exit(1);
+}
+
+function listCommands()
+{
+	$commands = [
+		'controller' => 'Create a new controller',
+		'model' => 'Create a new model',
+		'view' => 'Create a new view',
+		'helper' => 'Create a new helper',
+		'library' => 'Create a new library',
+		'clean' => 'Clean caches and logs',
+		'migration' => 'Generate a new migration',
+		'phpversion' => 'Check PHP version and loaded extensions',
+		'uptime' => 'Check server uptime',
+		'restart' => 'Optimize PHP',
+	];
+
+	echo coloredText("Available commands:\n", "green");
+	foreach ($commands as $command => $description) {
+		echo " - " . coloredText($command, "cyan") . ": $description\n";
+	}
+}
+
+
+function createController($name, $basePath)
+{
+	if (php_sapi_name() !== 'cli') {
+		exit(coloredText('No direct script access allowed', 'red'));
+	}
+
+	$controllerPath = $basePath . 'controllers/' . $name . '.php';
+	$content = "<?php\n\n";
+	$content .= "defined('BASEPATH') OR exit('No direct script access allowed');\n\n";
+	$content .= "class " . $name . " extends CI_Controller {\n\n";
+	$content .= "    public function index() {\n";
+	$content .= "        // TODO: Implement your logic here.\n";
+	$content .= "        echo 'Hello from $name controller!';\n";
+	$content .= "    }\n\n";
+	$content .= "}\n";
+
+	file_put_contents($controllerPath, $content);
+	echo coloredText("Controller $name created at $controllerPath\n", 'green');
+}
+
+function createModel($name, $basePath)
+{
+	if (php_sapi_name() !== 'cli') {
+		exit(coloredText('No direct script access allowed', 'red'));
+	}
+
+	$modelPath = $basePath . 'models/' . $name . '_model.php';
+	$content = "<?php\n\n";
+	$content .= "defined('BASEPATH') OR exit('No direct script access allowed');\n\n";
+	$content .= "class " . $name . "_model extends CI_Model {\n\n";
+	$content .= "    public function __construct() {\n";
+	$content .= "        parent::__construct();\n";
+	$content .= "    }\n\n";
+	$content .= "    // TODO: Implement your model logic here.\n";
+	$content .= "}\n";
+
+	file_put_contents($modelPath, $content);
+	echo coloredText("Model $name created at $modelPath\n", 'green');
+}
+
+function createView($name, $basePath)
+{
+	if (php_sapi_name() !== 'cli') {
+		exit(coloredText('No direct script access allowed', 'red'));
+	}
+
+	$viewPath = $basePath . 'views/' . $name . '.php';
+	$content = "<h1>Hello from $name view!</h1>\n";
+
+	file_put_contents($viewPath, $content);
+	echo coloredText("View $name created at $viewPath\n", 'green');
+}
+
+function createHelper($name, $basePath)
+{
+	$helperPath = $basePath . 'helpers/' . $name . '_helper.php';
+	$content = "<?php\n\n";
+	$content .= "defined('BASEPATH') OR exit('No direct script access allowed');\n\n";
+	$content .= "// Helper functions for $name\n";
+	$content .= "function example_helper_function() {\n";
+	$content .= "    // TODO: Implement your helper function here.\n";
+	$content .= "}\n";
+
+	file_put_contents($helperPath, $content);
+	echo coloredText("Helper $name created at $helperPath\n", 'green');
+}
+
+function createLibrary($name, $basePath)
+{
+	if (php_sapi_name() !== 'cli') {
+		exit(coloredText('No direct script access allowed', 'red'));
+	}
+
+	$libraryPath = $basePath . 'libraries/' . $name . '.php';
+	$content = "<?php\n\n";
+	$content .= "defined('BASEPATH') OR exit('No direct script access allowed');\n\n";
+	$content .= "class " . $name . " {\n\n";
+	$content .= "    public function __construct() {\n";
+	$content .= "        // TODO: Implement your library constructor here.\n";
+	$content .= "    }\n\n";
+	$content .= "    // TODO: Implement your library methods here.\n";
+	$content .= "}\n";
+
+	file_put_contents($libraryPath, $content);
+	echo coloredText("Library $name created at $libraryPath\n", 'green');
+}
+
+function generateMigration($name, $basePath)
+{
+
+	if (php_sapi_name() !== 'cli') {
+		exit('No direct script access allowed');
+	}
+
+	echo "Generating migration for: $name\n";
+
+	$migrationPath = $basePath . 'migrations/' . date('YmdHis') . "_$name.php";
+
+	list($db, $databaseName) = getDbConnection();
+	$tables = $db->query("SHOW TABLES")->fetch_all(MYSQLI_ASSOC);
+
+	$content = "<?php\n\n";
+	$content .= "defined('BASEPATH') OR exit('No direct script access allowed');\n\n";
+	$content .= "class Migration_" . ucfirst($name) . " extends CI_Migration {\n\n";
+	$content .= "    public function up() {\n";
+
+	foreach ($tables as $table) {
+		$tableName = $table['Tables_in_' . $databaseName];
+		$fields = $db->query("SHOW COLUMNS FROM $tableName")->fetch_all(MYSQLI_ASSOC);
+
+		$content .= "        // Create Table `$tableName`\n";
+		$content .= "        \$this->dbforge->add_field(array(\n";
+
+		foreach ($fields as $field) {
+			$fieldType = getMigrationFieldType($field);
+			$content .= "            '{$field['Field']}' => array(\n";
+			$content .= "                'type' => '$fieldType',\n";
+
+			if ($field['Key'] === 'PRI') {
+				$content .= "                'auto_increment' => TRUE,\n";
+			} else {
+				if (!is_null($field['Default'])) {
+					$default = is_numeric($field['Default']) ? $field['Default'] : "'{$field['Default']}'";
+					$content .= "                'default' => $default,\n";
+				}
+				if (strpos($field['Type'], 'varchar') !== false || strpos($field['Type'], 'char') !== false) {
+					$maxLength = explode('(', $field['Type'])[1];
+					$maxLength = rtrim($maxLength, ')');
+					$content .= "                'constraint' => $maxLength,\n";
+				}
+			}
+			$content .= "            ),\n";
+		}
+
+		$content .= "        ));\n";
+		$content .= "        \$this->dbforge->add_key('id', TRUE); // Primary Key\n";
+		$content .= "        \$this->dbforge->create_table('$tableName');\n\n";
+	}
+
+	$content .= "    }\n\n";
+	$content .= "    public function down() {\n";
+
+	foreach ($tables as $table) {
+		$tableName = $table['Tables_in_' . $databaseName];
+		$content .= "        \$this->dbforge->drop_table('$tableName'); // Drop `$tableName`\n";
+	}
+
+	$content .= "    }\n";
+	$content .= "}\n";
+
+	file_put_contents($migrationPath, $content);
+	echo "Migration for $name created at $migrationPath\n";
+}
+
+function getDbConnection()
+{
+	global $env;
+
+	$dbHost = $env['DB_HOSTNAME'] ?? '';
+	$dbUser = $env['DB_USERNAME'] ?? '';
+	$dbPass = $env['DB_PASSWORD'] ?? '';
+	$dbName = $env['DB_DATABASE'] ?? '';
+
+	if (empty($dbHost) || empty($dbUser) || empty($dbName)) {
+		die("Database configuration not set in .env");
+	}
+
+	$conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	}
+
+	return [$conn, $dbName];
+}
+
+function getMigrationFieldType($field)
+{
+	switch (true) {
+		case strpos($field['Type'], 'int') !== false:
+			return 'INT';
+		case strpos($field['Type'], 'varchar') !== false:
+			return 'VARCHAR';
+		case strpos($field['Type'], 'text') !== false:
+			return 'TEXT';
+		case strpos($field['Type'], 'datetime') !== false:
+			return 'DATETIME';
+		case strpos($field['Type'], 'float') !== false:
+			return 'FLOAT';
+		default:
+			return strtoupper($field['Type']);
+	}
+}
+
+function cleanCachesAndLogs($basePath)
+{
+
+	if (php_sapi_name() !== 'cli') {
+		exit('No direct script access allowed');
+	}
+
+	$cachePath = $basePath . 'cache/';
+	$logPath = $basePath . 'logs/';
+
+	// Clean cache directory
+	if (is_dir($cachePath)) {
+		$files = glob("$cachePath/*.php");
+		foreach ($files as $file) {
+			if (is_file($file)) {
+				unlink($file);
+			}
+		}
+		echo "Cache cleared at $cachePath\n";
+	} else {
+		echo "Cache directory does not exist: $cachePath\n";
+	}
+
+	// Clean log directory
+	if (is_dir($logPath)) {
+		$files = glob("$logPath/*.php");
+		foreach ($files as $file) {
+			if (is_file($file)) {
+				unlink($file);
+			}
+		}
+		echo "Logs cleared at $logPath\n";
+	} else {
+		echo "Log directory does not exist: $logPath\n";
+	}
+}
+
+function checkPhpVersion()
+{
+	echo coloredText("Checking PHP Version and Extensions...\n", "cyan");
+	echo "PHP Version: " . phpversion() . "\n";
+	$extensions = ['curl', 'mbstring', 'json', 'xml', 'mysqli'];
+	foreach ($extensions as $ext) {
+		echo ($ext . " extension: " . (extension_loaded($ext) ? coloredText("Enabled", "green") : coloredText("Disabled", "red")) . "\n");
+	}
+}
+
+function checkServerUptime()
+{
+	echo coloredText("Checking Server Uptime...\n", "cyan");
+
+	if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+		$uptime = shell_exec('net stats srv | find "Statistics since"');
+		echo "Server Uptime: " . trim($uptime) . "\n";
+	} else {
+		$uptime = shell_exec('uptime');
+		echo "Server Uptime: " . trim($uptime) . "\n";
+	}
+}
+
+function restartPhp()
+{
+	echo coloredText("Attempting to Restart PHP...\n", "cyan");
+
+	// Get the current PHP version
+	$phpVersionOutput = shell_exec('php -v');
+
+	// Check if we successfully got the PHP version
+	if (strpos($phpVersionOutput, 'PHP') === false) {
+		echo coloredText("Failed to get PHP version. Ensure PHP is installed and accessible.\n", "red");
+		return;
+	}
+
+	// Extract the major and minor version numbers
+	preg_match('/PHP (\d+\.\d+)/', $phpVersionOutput, $matches);
+	if (!isset($matches[1])) {
+		echo coloredText("Failed to parse PHP version.\n", "red");
+		return;
+	}
+
+	$phpVersion = $matches[1];
+	$serviceName = 'php' . $phpVersion . '-fpm'; // Construct the service name
+
+	// Command to restart PHP
+	$command = 'sudo service ' . $serviceName . ' restart';
+	$result = shell_exec($command . ' 2>&1'); // Capture both stdout and stderr
+
+	// Check if the command was successful
+	if ($result === null) {
+		echo coloredText("Failed to execute command. Please check your permissions or service name.\n", "red");
+	} elseif (strpos($result, 'failed') !== false) {
+		echo coloredText("Failed to Restart PHP. Here’s what happened:\n", "red");
+		echo coloredText($result, "yellow"); // Display error details in yellow
+	} else {
+		echo coloredText("PHP Restarted Successfully.\n", "green");
+	}
+}
+
+function coloredText($text, $color)
+{
+	$colors = [
+		"red" => "\033[31m",
+		"green" => "\033[32m",
+		"yellow" => "\033[33m",
+		"blue" => "\033[34m",
+		"magenta" => "\033[35m",
+		"cyan" => "\033[36m",
+		"white" => "\033[37m",
+		"reset" => "\033[0m",
+	];
+
+	return $colors[$color] . $text . $colors["reset"];
+}
+
